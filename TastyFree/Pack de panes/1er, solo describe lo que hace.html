@@ -1,0 +1,35 @@
+<h3>¿Qué Panes quieres en tu caja?</h3>
+
+<!-- Lista de opciones de panes con casillas de verificación -->
+<p class="line-item-property__field">
+    <input type="checkbox" id="Pan-de molde integral Multigrano" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de molde integral Multigrano"><label for="Pan-de molde integral Multigrano">Pan de molde integral Multigrano</label><br>
+    <!-- ... Otras opciones de pan con sus respectivas casillas de verificación ... -->
+    <input type="hidden" id="¿Qué-panes quieres?" form="product-form-{{section.id}}" name="properties[¿Qué panes quieres?]">
+    
+    <!-- Script JavaScript para la función fillHidden -->
+    <script>
+      function fillHidden(hiddenname) {
+        // Selecciona todas las casillas de verificación relacionadas con el campo oculto
+        var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
+        // Obtiene el campo oculto por su ID
+        var hiddenfield = document.getElementById(hiddenname);
+        // Inicializa el valor del campo oculto
+        hiddenfield.value = "";
+        
+        // Itera sobre todas las casillas de verificación
+        for (var i = 0; i < checkboxes.length; i++) {
+          var checkbox = checkboxes[i];
+          
+          // Verifica si la casilla está marcada
+          if (checkbox.checked) {
+            // Actualiza el valor del campo oculto con el valor de la casilla marcada
+            if (hiddenfield.value == "") {
+              hiddenfield.value = checkbox.value;
+            } else {
+              hiddenfield.value = hiddenfield.value + ", " + checkbox.value; 
+            }
+          }
+        }
+      }
+    </script>
+</p>

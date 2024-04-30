@@ -1,0 +1,52 @@
+<h3>¿Qué Panes quieres en tu caja?</h3>
+
+<p class="line-item-property__field">
+    <input type="checkbox" id="Pan-de molde integral Multigrano" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?', 'cantidad-pan-multigrano')" value="Pan de molde integral Multigrano">
+    <label for="Pan-de molde integral Multigrano">Pan de molde integral Multigrano</label>
+    <!-- Controles de cantidad -->
+    <input type="button" value="-" onclick="updateQuantity('cantidad-pan-multigrano', -1)">
+    <input type="text" id="cantidad-pan-multigrano" value="0" readonly>
+    <input type="button" value="+" onclick="updateQuantity('cantidad-pan-multigrano', 1)">
+    <br>
+
+    <!-- ... Otras opciones de pan con sus respectivas casillas, controles de cantidad, etc. ... -->
+
+    <input type="hidden" id="¿Qué-panes quieres?" form="product-form-{{section.id}}" name="properties[¿Qué panes quieres?]">
+    
+    <script>
+        function fillHidden(hiddenname, quantityId) {
+            var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
+            var hiddenfield = document.getElementById(hiddenname);
+            hiddenfield.value = "";
+            
+            for (var i = 0; i < checkboxes.length; i++) {
+                var checkbox = checkboxes[i];
+                if (checkbox.checked) {
+                    if (hiddenfield.value == "") {
+                        hiddenfield.value = checkbox.value;
+                    } else {
+                        hiddenfield.value = hiddenfield.value + ", " + checkbox.value; 
+                    }
+                    
+                    // Habilita el campo de cantidad para el pan seleccionado
+                    document.getElementById(quantityId).readOnly = false;
+                } else {
+                    // Deshabilita el campo de cantidad si la casilla no está marcada
+                    document.getElementById(quantityId).readOnly = true;
+                    document.getElementById(quantityId).value = 0;
+                }
+            }
+        }
+
+        function updateQuantity(quantityId, change) {
+            var quantityField = document.getElementById(quantityId);
+            var currentQuantity = parseInt(quantityField.value);
+            var newQuantity = currentQuantity + change;
+
+            // Asegura que la cantidad no sea negativa
+            newQuantity = Math.max(newQuantity, 0);
+
+            quantityField.value = newQuantity;
+        }
+    </script>
+</p>

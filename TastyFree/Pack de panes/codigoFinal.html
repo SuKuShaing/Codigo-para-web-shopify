@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            max-width: 700px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        falta el código para que se añada al carrito y el estilado que tal vez sea grid
+    -->
+    <fieldset>
+        <legend>Selecciona la cantidad de panes</legend>
+        <div>
+            <input type="radio" id="6panes" name="selectorDePanes" value="6" checked/>
+            <label for="6panes">6 panes</label>
+            <div class="">
+            </div>
+            <div>
+                <input type="radio" id="12panes" name="selectorDePanes" value="12" />
+            </div>
+            <label for="12panes">12 panes</label>
+            <div class="">
+            </div>
+        </fieldset>
+        
+    </div>
+    <div id="contiene-todo">
+        <style>
+            input[type=text] {
+                width: 30px; text-align: center;
+                }
+
+            .EnRojo {
+                font-size: 1.5rem;
+                font-weight: 900;
+                color: red;
+                animation: palpitar 0.5s infinite alternate;
+            }
+
+            @keyframes palpitar {
+                from {
+                    transform: scale(1);
+                }
+                to {
+                    transform: scale(1.2);
+                }
+            }
+            
+            #tituloCantidad {
+                margin-bottom: 0px;
+            }
+            
+            #cantSelectUsuario {
+                margin-right: 6px;
+            }
+
+            .cont-grid {
+                display: grid;
+                grid-template-columns: 6fr 3fr;
+                grid-auto-rows: auto;
+            }
+            .imitacion {
+                border: solid 1px #663c13;
+                border-radius: 3px;
+                background-color: transparent;
+                color: #663c13;
+            }
+            input:disabled {
+                border: solid 1px rgba(102, 60, 19, 0.4);
+                color: rgba(102, 60, 19, 0.4);
+            }
+            .show-number {
+                border: solid 1px #663c13;
+                border-radius: 3px;
+                color: #663c13;
+            }
+        </style>
+
+        <h3>¿Qué Panes quieres en tu caja?</h3>
+        <div class="cont-grid">
+            <!-- <input type="checkbox" id="PanMoldeIntegralMultigrano" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan de molde integral Multigrano"> -->
+            <label for="PanMoldeIntegralMultigrano" class="label-pan">Pan de Molde integral Multigrano</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-pan-multigrano', -1)">
+                <input class="show-number" type="text" id="cantidad-pan-multigrano" name="Pan de molde integral Multigrano" hidden-data="panesSeleccionado" value="0" readonly>
+                <input class="imitacion" type="button" id="PanMoldeIntegralMultigrano" value="+" onclick="updateQuantity('cantidad-pan-multigrano', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanMoldeBlanco" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan de molde Blanco"> -->
+            <label for="PanMoldeBlanco" class="label-pan">Pan de Molde Blanco</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanMoldeBlanco', -1)">
+                <input class="show-number" type="text" id="cantidad-PanMoldeBlanco" name="Pan de molde Blanco" hidden-data="panesSeleccionado" value="0" readonly>
+                <input class="imitacion" type="button" id="PanMoldeBlanco" value="+" onclick="updateQuantity('cantidad-PanMoldeBlanco', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanCompleto" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan de Completo"> -->
+            <label for="PanCompleto" class="label-pan">Pan de Completo</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanCompleto', -1)">
+                <input class="show-number" type="text" id="cantidad-PanCompleto" name="Pan de Completo" hidden-data="panesSeleccionado" value="0" readonly>
+                <input class="imitacion" type="button" id="PanCompleto" value="+" onclick="updateQuantity('cantidad-PanCompleto', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanHamburguesa" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan de Hamburguesa"> -->
+            <label for="PanHamburguesa" class="label-pan">Pan de Hamburguesa</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanHamburguesa', -1)">
+                <input class="show-number" type="text" id="cantidad-PanHamburguesa" name="Pan de Hamburguesa" hidden-data="panesSeleccionado" value="0" readonly>
+                <input class="imitacion" type="button" value="+" id="PanHamburguesa" onclick="updateQuantity('cantidad-PanHamburguesa', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanAceituna" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan de Aceituna"> -->
+            <label for="PanAceituna" class="label-pan">Pan de Aceituna</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanAceituna', -1)">
+                <input class="show-number" type="text" id="cantidad-PanAceituna" name="Pan de Aceituna" hidden-data="panesSeleccionado" value="0" readonly>
+                <input class="imitacion" type="button" id="PanAceituna" value="+" onclick="updateQuantity('cantidad-PanAceituna', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanMasaMadre" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan de Masa Madre"> -->
+            <label for="PanMasaMadre" class="label-pan">Pan de Masa Madre</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanMasaMadre', -1)">
+                <input class="show-number" type="text" id="cantidad-PanMasaMadre" name="Pan de Masa Madre" hidden-data="panesSeleccionado" value="0" readonly>
+                <input class="imitacion" type="button" value="+" id="PanMasaMadre" onclick="updateQuantity('cantidad-PanMasaMadre', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanCebolla" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan de Cebolla"> -->
+            <label for="PanCebolla" class="label-pan">Pan de Cebolla</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanCebolla', -1)">
+                <input class="show-number" type="text" id="cantidad-PanCebolla" value="0" name="Pan de Cebolla" hidden-data="panesSeleccionado" readonly>
+                <input class="imitacion" type="button" id="PanCebolla" value="+" onclick="updateQuantity('cantidad-PanCebolla', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanAmasado" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan Amasado"> -->
+            <label for="PanAmasado" class="label-pan">Pan Amasado</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanAmasado', -1)">
+                <input class="show-number" type="text" id="cantidad-PanAmasado" name="Pan Amasado" hidden-data="panesSeleccionado" value="0" readonly>
+                <input class="imitacion" type="button" id="PanAmasado" value="+" onclick="updateQuantity('cantidad-PanAmasado', 1)"><br>
+            </div>
+            
+            <!-- <input type="checkbox" id="PanDobladita" class="input-pan" onchange="cuentaAlmacena()" hidden-data="panesSeleccionado" value="Pan Dobladita"> -->
+            <label for="PanDobladita" class="label-pan">Pan Dobladita</label>
+            <div class="">
+                <input class="imitacion" type="button" value="-" onclick="updateQuantity('cantidad-PanDobladita', -1)">
+                <input class="show-number" type="text" id="cantidad-PanDobladita" name="Pan Dobladita" value="0" hidden-data="panesSeleccionado" readonly>
+                <input class="imitacion" type="button" id="PanDobladita" value="+" onclick="updateQuantity('cantidad-PanDobladita', 1)"><br>
+            </div>
+        </div>
+
+        <!-- Muestra lo guardado en pantalla -->
+        <h4 id="tituloCantidad"></h4>
+        <div style="display: flex">
+            <p id="cantSelectUsuario"></p>
+            <p id="LimiteDePanes"></p>
+        </div>
+
+        <input type="hidden" id="quePanesLleva" form="product-form-{{section.id}}" name="properties[¿Qué panes quieres?]">
+        <!-- name="properties[¿Qué panes quieres?]" se escribe así puesto que shopify buscará properties y sacara lo que está entre corchetes -->
+        <!-- form="product-form-{{section.id}}" Todas las etiquetas con esa propiedad pasarán al carrito de compra y a shopify -->
+        <!-- <p id="testeo"></p> -->
+
+
+        <script>
+            const tituloCantidad = document.getElementById("tituloCantidad"); 
+            const cantSelectUsuario = document.getElementById("cantSelectUsuario"); 
+            const LimiteDePanes = document.getElementById("LimiteDePanes"); 
+            // const testeoText = document.getElementById("testeo"); 
+            const quePanesLleva = document.getElementById("quePanesLleva"); 
+            var checkboxes = document.querySelectorAll('[hidden-data="panesSeleccionado"]'); //de todos los input de la pagina obtenemos solo la lista de inputs de panes, se guarda como un array
+            var seleccionLimite = document.querySelectorAll('input[type="radio"]');
+
+            seleccionLimite.forEach(function(radio) {
+                radio.setAttribute('onclick', 'cuenta()')
+            });
+
+            //Obtiene el valor clickeado por el usuario, lo muestra, lo retorna y lo guarda
+            function leerCantidadLimiteTest() {
+                let elementoActivo = document.querySelector('input[name="selectorDePanes"]:checked');
+                // console.log(parseInt(elementoActivo.value));
+                limiteTotalDePanes = (parseInt(elementoActivo.value)); //Guarda el valor número del limite de panes según la opción que haya seleccionado el usuario
+                LimiteDePanes.innerText = " de " + limiteTotalDePanes + " panes";
+
+                return limiteTotalDePanes;
+            }
+
+            //Lee el límite según la opción seleccionada en shopify.
+            function leerCantidadLimiteShopify() {
+                let elementoActivo = document.querySelector('input[name="Pack"]:checked');
+                console.log(elementoActivo);
+                console.log(elementoActivo.value);
+                numero = elementoActivo.value.slice(5);
+                console.log(numero);
+                limiteTotalDePanes = (parseInt(numero)); //Guarda el valor número del limite de panes según la opción que haya seleccionado el usuario
+                LimiteDePanes.innerText = " de " + limiteTotalDePanes + " panes";
+
+                return limiteTotalDePanes;
+            }
+
+            //Desactiva o activa los botones más si es que llegan al límite 
+            function DesactivaBtnMas(cantidadUsuario, limitePanes) {
+                var botonesMas = document.querySelectorAll('input[value="+"]');
+                if (cantidadUsuario >= limitePanes) {
+                    botonesMas.forEach(function(boton) {
+                        boton.disabled = true;
+                    });
+                } else {
+                    botonesMas.forEach(function(boton) {
+                        boton.disabled = false;
+                    });
+                }
+            }
+
+            //Marcará en rojo si es que hay más panes de los necesarios
+            function retirarPanes(cantidadUsuario, limitePanes) {
+                if (cantidadUsuario > limitePanes) {
+                    LimiteDePanes.classList.add('EnRojo');
+                    cantSelectUsuario.classList.add('EnRojo');
+                    tituloCantidad.classList.add('EnRojo');
+                } else {
+                    LimiteDePanes.classList.remove('EnRojo');
+                    cantSelectUsuario.classList.remove('EnRojo');
+                    tituloCantidad.classList.remove('EnRojo');
+                }
+            }
+
+            //Cambia el título en función de la cantidad de panes seleccionados, Es una ayuda para el usuario
+            function cuantaCantidad(cantidadUsuario, limitePanes) {
+                if (cantidadUsuario < limitePanes) {
+                    tituloCantidad.innerText = "Seleccione los panes que desee ";
+                } else if(cantidadUsuario > limitePanes) {
+                    tituloCantidad.innerText = "Disminuya la cantidad de panes ";
+                } else {
+                    tituloCantidad.innerText = "Listo ";
+                }
+            }
+
+            //Función que le pasará la información a Shopify
+            function cuenta() {
+                cantidadUsuario = 0;
+                // testeoText.innerText= "";
+                quePanesLleva.value = "";
+                for (i = 0; i < checkboxes.length; i++) { // revisará todo los input guardados en el array checkboxes
+                    if(parseInt(checkboxes[i].value)>0){ // Revisa la cantidad de cada pan y si es mayor a cero, pasa
+                        // testeoText.innerText = testeoText.innerText + " " + checkboxes[i].name + " x " + checkboxes[i].value + ";" ;
+                        quePanesLleva.value = quePanesLleva.value + " " + checkboxes[i].name + " x " + checkboxes[i].value + ";" ;
+                        cantidadUsuario += parseInt(checkboxes[i].value);
+                    }
+                }
+                cantSelectUsuario.innerText = cantidadUsuario;
+                limitePanes = leerCantidadLimiteShopify(); //leerCantidadLimiteTest();
+                DesactivaBtnMas(cantidadUsuario, limitePanes);
+                retirarPanes(cantidadUsuario, limitePanes);
+                cuantaCantidad(cantidadUsuario, limitePanes);
+                console.log(quePanesLleva.value);
+            }
+
+            //Función que suma o resta la cantidad de panes
+            function updateQuantity(quantityId, change) {
+                var quantityField = document.getElementById(quantityId); //identifica el cuadro a modificar
+                var currentQuantity = parseInt(quantityField.value); //obtiene el valor actual en formato numérico
+                var newQuantity = currentQuantity + change; //al valor actual le suma el valor de cambio enviado en Change
+
+                newQuantity = Math.max(newQuantity, 0); // Asegura que la cantidad no sea negativa, eligiendo el número mayor
+
+                quantityField.value = newQuantity; //coloca la cantidad en pantalla
+                cuenta(); //llama a la fc cuenta para que el valor se guarde en la variable que envía la info
+            }
+        </script>
+    </div>
+</body>
+</html>

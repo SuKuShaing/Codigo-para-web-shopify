@@ -1,0 +1,38 @@
+<input placeholder="escribe aqui el mensaje para tus clientes:" type="text" form="product-form-{{section.id}}" name="properties[Categoria]">
+<textarea class="text-area" style="border-radius: 15px 15px 0px 15px; resize: vertical; padding: 1rem;" name="properties[panes]" form="cart" id="Product-box-note" placeholder="Ejemplo: 2 Panes de molde Blanco, 1 pan de molde multigrano, 3 dobladitas"></textarea>
+
+
+<h3>¿Qué Panes quieres en tu caja?</h3>
+
+<p class="line-item-property__field">
+    <input type="checkbox" id="Pan-de molde integral Multigrano" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de molde integral Multigrano"><label for="Pan-de molde integral Multigrano">Pan de molde integral Multigrano</label><br>
+    <input type="checkbox" id="Pan-de molde Blanco" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de molde Blanco"><label for="Pan-de molde Blanco">Pan de molde Blanco</label><br>
+    <input type="checkbox" id="Pan-Amasado" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan Amasado"><label for="Pan-Amasado">Pan Amasado</label><br>
+    <input type="checkbox" id="Pan-de Completo" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de Completo"><label for="Pan-de Completo">Pan de Completo</label><br>
+    <input type="checkbox" id="Pan-de Hamburguesa" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de Hamburguesa"><label for="Pan-de Hamburguesa">Pan de Hamburguesa</label><br>
+    <input type="checkbox" id="Pan-de Aceituna" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de Aceituna"><label for="Pan-de Aceituna">Pan de Aceituna</label><br>
+    <input type="checkbox" id="Pan-de Masa Madre" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de Masa Madre"><label for="Pan-de Masa Madre">Pan de Masa Madre</label><br>
+    <input type="checkbox" id="Pan-de Cebolla" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de Cebolla"><label for="Pan-de Cebolla">Pan de Cebolla</label><br>
+    <input type="checkbox" id="Pan-Dobladita" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan Dobladita"><label for="Pan-Dobladita">Pan Dobladita</label><br>
+    <input type="hidden" id="¿Qué-panes quieres?" form="product-form-{{section.id}}" name="properties[¿Qué panes quieres?]">
+    <script>
+      function fillHidden(hiddenname) {
+      var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
+      var hiddenfield = document.getElementById(hiddenname);
+      hiddenfield.value = ""
+      var i;
+      for (i = 0; i < checkboxes.length; i++) {
+        var x = checkboxes[i];
+        if(x.checked){
+          if(hiddenfield.value==""){
+            hiddenfield.value = x.value;
+            }else{
+            hiddenfield.value = hiddenfield.value + ", " + x.value; 
+            } 
+          }
+        }
+      }
+    </script>
+  </p>
+<label style="font-weight: 500;">Puedes especificar las cantidades de cada pan (opcional)</label>
+<textarea class="text-area" style="border-radius: 15px 15px 0px 15px; resize: vertical; padding: 1rem;" placeholder="Ejemplo: 1 dobladita, 3 pan amados, dos de todo lo demás" form="product-form-{{section.id}}" name="properties[Cantidades]"></textarea>

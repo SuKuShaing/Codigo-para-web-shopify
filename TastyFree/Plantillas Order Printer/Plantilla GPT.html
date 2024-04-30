@@ -1,0 +1,32 @@
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .hoja-de-ruta { text-align: center; margin-top: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+  </style>
+  <div class="hoja-de-ruta">
+    <h2>Hoja de Ruta</h2>
+    <p>Fecha: {{ "now" | date: "%d/%m/%Y" }}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>N° Pedido</th>
+          <th>Dirección</th>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí asumimos que tienes una variable 'orders' para iterar -->
+        {% for order in orders %}
+          <tr>
+            <td>{{ order_name }}</td>
+            <td>{{ shipping_address | format_address }}</td>
+            <td>{{ shipping_address.name }}</td>
+            <td>{{ order_phone }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>

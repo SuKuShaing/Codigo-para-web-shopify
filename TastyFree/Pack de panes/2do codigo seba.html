@@ -1,0 +1,85 @@
+<p class="line-item-property__field">
+    <!-- Checkbox para "Pan de molde integral Multigrano" -->
+    <div class="pan-option">
+        <input type="checkbox" id="Pan-de molde integral Multigrano" data-quantity-id="cantidad-pan-multigrano" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de molde integral Multigrano">
+        <label for="Pan-de molde integral Multigrano">Pan de molde integral Multigrano</label>
+        <!-- Controles de cantidad -->
+        <input type="button" value="-" onclick="updateQuantity('cantidad-pan-multigrano', -1)">
+        <input type="text" id="cantidad-pan-multigrano" value="0" readonly style="width: 25px; text-align: center;">
+        <input type="button" value="+" onclick="updateQuantity('cantidad-pan-multigrano', 1)">
+    </div>
+
+    <!-- Checkbox para "Pan de molde Blanco" -->
+    <div class="pan-option">
+        <input type="checkbox" id="Pan-de molde Blanco" data-quantity-id="cantidad-pan-blanco" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan de molde Blanco">
+        <label for="Pan-de molde Blanco">Pan de molde Blanco</label>
+        <!-- Controles de cantidad -->
+        <input type="button" value="-" onclick="updateQuantity('cantidad-pan-blanco', -1)">
+        <input type="text" id="cantidad-pan-blanco" value="0" readonly style="width: 25px; text-align: center;">
+        <input type="button" value="+" onclick="updateQuantity('cantidad-pan-blanco', 1)">
+    </div>
+
+    <!-- Checkbox para "Pan Amasado" -->
+    <div class="pan-option">
+        <input type="checkbox" id="Pan-Amasado" data-quantity-id="cantidad-pan-amasado" hidden-data="¿Qué-panes quieres?" onchange="fillHidden('¿Qué-panes quieres?')" value="Pan Amasado">
+        <label for="Pan-Amasado">Pan Amasado</label>
+        <!-- Controles de cantidad -->
+        <input type="button" value="-" onclick="updateQuantity('cantidad-pan-amasado', -1)">
+        <input type="text" id="cantidad-pan-amasado" value="0" readonly style="width: 25px; text-align: center;">
+        <input type="button" value="+" onclick="updateQuantity('cantidad-pan-amasado', 1)">
+    </div>
+
+    <!-- Puedes replicar la estructura anterior para otras opciones de pan -->
+
+    <!-- Campo oculto para almacenar las selecciones del usuario -->
+    <input type="hidden" id="¿Qué-panes quieres?" form="product-form-{{section.id}}" name="properties[¿Qué panes quieres?]">
+    
+    <script>
+        // Función para actualizar el campo oculto con las selecciones de pan y cantidad
+        function fillHidden(hiddenname) {
+            // Busca todos los checkboxes relacionados con la propiedad específica
+            var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
+            // Obtiene el campo oculto por su ID
+            var hiddenfield = document.getElementById(hiddenname);
+            // Inicializa la cadena de selecciones
+            hiddenfield.value = "";
+            
+            // Recorre cada checkbox
+            for (var i = 0; i < checkboxes.length; i++) {
+                var checkbox = checkboxes[i];
+                // Verifica si el checkbox está marcado
+                if (checkbox.checked) {
+                    // Obtiene el valor del campo de cantidad
+                    var quantity = document.getElementById(checkbox.dataset.quantityId).value;
+                    
+                    // Añade la selección del usuario y la cantidad al campo oculto
+                    hiddenfield.value += checkbox.value + " x " + quantity + ", ";
+                    
+                    // Habilita el campo de cantidad para el pan seleccionado
+                    document.getElementById(checkbox.dataset.quantityId).readOnly = false;
+                } else {
+                    // Deshabilita el campo de cantidad si la casilla no está marcada
+                    document.getElementById(checkbox.dataset.quantityId).readOnly = true;
+                    // Restablece la cantidad a 0
+                    document.getElementById(checkbox.dataset.quantityId).value = 0;
+                }
+            }
+        }
+
+        // Función para actualizar la cantidad de pan
+        function updateQuantity(quantityId, change) {
+            // Obtiene el campo de cantidad por su ID
+            var quantityField = document.getElementById(quantityId);
+            // Obtiene el valor actual de cantidad como número entero
+            var currentQuantity = parseInt(quantityField.value);
+            // Calcula la nueva cantidad sumando el cambio
+            var newQuantity = currentQuantity + change;
+
+            // Asegura que la cantidad no sea negativa
+            newQuantity = Math.max(newQuantity, 0);
+
+            // Asigna la nueva cantidad al campo de cantidad
+            quantityField.value = newQuantity;
+        }
+    </script>
+</p>
