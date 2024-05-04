@@ -1,0 +1,37 @@
+<script>
+    window.onload = function() {
+        let labels = document.querySelectorAll('input[type="radio"]');
+        labels.forEach(function(label) {
+            label.setAttribute('onclick', 'updateMax()');
+        });
+        let boton = document.querySelectorAll('button.quantity__button');
+        boton.forEach(function(boton) {
+            boton.setAttribute('onclick', 'updateMax()');
+        });
+    };
+
+    function sacarNumero() {
+        var inventoryElement = document.querySelector('p.product__inventory');
+        if (inventoryElement) {
+            var inventoryText = inventoryElement.textContent;
+            var number = parseInt(inventoryText.match(/\d+/)[0]);
+        };
+        return number;
+    }
+
+    function updateMax() {
+        let quantityInput = document.querySelector('input.quantity__input');
+        if (quantityInput) {
+            quantityInput.setAttribute('max', sacarNumero());
+        }
+    }
+    updateMax();
+</script>
+
+
+<!-- 
+Seba2Seba, hay un código js de shopify que sobre escribe el código max=Numero que se ejecuta al inicio por un max=null
+entonces cuando el valor es 1, se coloca max=1, y shopify lo sobrescribe a max=null
+pero como también lo puse en el botón, al aumentar o disminuir se coloca el max=numero.
+por ende funciona con todos excepto con los valores 1
+-->
