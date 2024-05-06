@@ -1,0 +1,151 @@
+<p style="float: right; text-align: right; margin: 0;">
+    {{ "now" | date: "%m/%d/%y" }}<br />
+    Factura para {{ order_name }}
+</p>
+
+<div style="float: left; margin: 0 0 1.5em 0;" >
+    <strong style="font-size: 2em;">{{ shop_name }}</strong><br /><br />
+    {{ shop.address }}<br/>
+    {{ shop.city }} {{ shop.province_code }} {{ shop.zip | upcase }}<br/>
+    {{ shop.country }}
+</div>
+
+<hr />
+
+<h3 style="margin: 0 0 1em 0;">Detalles del Ítem</h3>
+
+<table class="table-tabular" style="margin: 0 0 1.5em 0;">
+    <thead>
+        <tr>
+            <th>Cantidad</th>
+            <th>Ítem</th>
+            <th>Valor Neto</th>
+            {% if show_line_item_taxes %}
+                <th>IVA</th>
+            {% endif %}
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for line_item in line_items %}
+        <tr>
+            <td>{{ line_item.quantity }} x</td>
+            <td><b>{{ line_item.title }}</b></td>
+            {% if show_line_item_taxes %}
+                <td>
+                {% for tax_line in line_item.tax_lines %}
+                    {% if line_item.original_price != line_item.price %}
+                        <!-- <s>{{ (line_item.original_price - tax_line.price) | money }}</s>     -->
+                        <s>{{ (line_item.original_price | remove: '$' | minus: tax_line.price) | money }}</s>    
+                    {% endif %}
+                    <!-- {{ (line_item.price - tax_line.price) | money }}<br/> -->
+                    {{ (line_item.price | remove: '$' | minus: tax_line.price) | money }}<br/>
+                {% endfor %}
+                </td>
+                <td>
+                    {% for tax_line in line_item.tax_lines %}
+                    {{ tax_line.price | money }}<br/>
+                    {% endfor %}
+                </td>
+            {% endif %}
+            <td>
+                {% if line_item.original_price != line_item.price %}
+                <s>{{ line_item.original_price | money }}</s>
+                {% endif %}
+                {{ line_item.price | money }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if transactions.size > 1 %}
+<h3 style="margin: 0 0 1em 0;">Detalles de la Transacción</h3>
+<table class="table-tabular" style="margin: 0 0 1.5em 0;">
+    <thead>
+        <tr>
+            <th>Tipo</th>
+            <th>Monto</th>
+            <th>Clase</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.gateway | payment_method }}</td>
+            <td>{{ transaction.amount | money }}</td>
+            <td>{{ transaction.kind }}</td>
+            <td>{{ transaction.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<h3 style="margin: 0 0 1em 0;">Detalles del Pago</h3>
+
+<table class="table-tabular" style="margin: 0 0 1.5em 0;">
+    {% for discount in discounts %}
+    <tr>
+        <td>Valor Neto:</td>
+        <!-- precio subtotal | en formato moneda -->
+        <!-- tax_price viene con el simbolo $, remove '$' lo saca -->
+        <!-- discount.savings es el descuento y viene negativo, para sumarlo se resta -->
+        <!-- subtotal_price menos los impuestos da el valor neto subtotal, más el descuento da el valor neto y todo eso en formato moneda -->
+        <td>{{ subtotal_price | remove: '$' | minus: tax_price | minus: discount.savings | money }}</td>
+    </tr>
+    <tr>
+        <td>Incluye descuento "{{ discount.code }}"</td>
+        <td>{{ discount.savings | money }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td>Valor Neto subtotal:</td>
+        <!-- <td>{{ subtotal_price | money }}</td> -->
+        <!-- precio subtotal | en formato moneda -->
+        <!-- tax_price viene con el simbolo $, remove '$' lo saca -->
+        <!-- subtotal_price menos los impuestos da el valor neto y todo eso en formato moneda -->
+        <td>{{ subtotal_price | remove: '$' | minus: tax_price | money }}</td>
+    </tr>
+    <tr>
+        <td>IVA total:</td>
+        <td>{{ tax_price | money }}</td>
+    </tr>
+    {% if shipping_address %}
+    <tr>
+        <td>Envío:</td>
+        <td>{{ shipping_price | money }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+        <td><strong>Precio total:</strong></td>
+        <td><strong>{{ total_price | money }}</strong></td>
+    </tr>
+    {% if total_paid != total_price %}
+    <tr>
+        <td><strong>Total pagado:</strong></td>
+        <td><strong>{{ total_paid | money }}</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Monto Pendiente:</strong></td>
+        <td><strong>{{ total_price | minus: total_paid | money }}</strong></td>
+    </tr>
+    {% endif %}
+</table>
+
+{% if note %}
+<h3 style="margin: 0 0 1em 0;">Nota</h3>
+<p>{{ note }}</p>
+{% endif %}
+
+{% if shipping_address %}
+<h3 style="margin: 0 0 1em 0;">Detalles del Envío</h3>
+
+<div style="margin: 0 0 1em 0; padding: 1em; border: 1px solid black;">
+    <strong>{{ shipping_address.name }}</strong><br/>
+    {{ shipping_address | format_address }}
+</div>
+{% endif %}
+
+<p>Si tiene alguna pregunta, por favor envíe un correo electrónico a <u>{{ shop.email }}</u></p>
