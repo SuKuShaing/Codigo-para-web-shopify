@@ -104,7 +104,7 @@
         <td>Valor Neto subtotal:</td>
         <!-- <td>{{ subtotal_price | money }}</td> -->
         <!-- precio subtotal | en formato moneda -->
-        <!-- tax_price viene con el simbolo $, remove '$' lo saca -->
+        <!-- tax_price viene con el símbolo $, remove '$' lo saca -->
         <!-- subtotal_price menos los impuestos da el valor neto y todo eso en formato moneda -->
         <td>{{ subtotal_price | remove: '$' | minus: tax_price | money }}</td>
     </tr>
