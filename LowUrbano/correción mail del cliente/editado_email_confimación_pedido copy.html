@@ -354,7 +354,7 @@
     </p>
   </td>
   <td class="subtotal-line__value">
-      <strong>{{ subtotal_price | remove: '$' | minus: tax_price | plus: total_order_discount_amount | money }}</strong>
+      <strong>{{ subtotal_price | plus: total_order_discount_amount | remove: '$' | minus: tax_price | money }}</strong>
   </td>
 </tr>
 

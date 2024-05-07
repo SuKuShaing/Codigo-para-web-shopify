@@ -254,7 +254,7 @@
     {% if valueBold %}
       <strong>{{ subtotal_price | remove: '$' | minus: tax_line.price | plus: total_order_discount_amount | money }}</strong>
     {% else %}
-      {{ subtotal_price | remove: '$' | minus: tax_line.price | plus: total_order_discount_amount | money }}
+      {{ subtotal_price | plus: total_order_discount_amount | remove: '$' | minus: tax_price | money }}
     {% endif %}
   </td>
 </tr>
