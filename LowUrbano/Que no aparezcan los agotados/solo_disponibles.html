@@ -1,13 +1,43 @@
 <script>
     window.onload = function() {
         let checkBox = document.getElementById('Filter-filter.v.availability-1');
+        // Solo en caso de que no esté checkeado
         // clickear el checkbox de solo disponibles
-        checkBox.click();
-        // esperar 0.5 segundo para que cargue la página
-        // que suba al inicio de la página suavemente
-        setTimeout(function() {
-            window.scrollTo(0, 0);
-        }, 500);
-        // 
+        if (!checkBox.checked) {
+            checkBox.click();
+
+            // esperar 0.5 segundo para que cargue la página
+            // que suba al inicio de la página suavemente
+
+            //setTimeout(function() {
+            //    console.log('Entré al setTimeout 1');
+            //    window.scrollTo(0, 0);
+            //}, 1000);
+
+            //setTimeout(function() {
+            //    console.log('Entré al setTimeout 2');
+            //    window.scroll(0, 0);
+            //}, 1000);
+
+            //setTimeout(function() {
+            //    console.log('Entré al setTimeout 3');
+            //    window.scrollBy(0, -document.body.scrollHeight);
+            //}, 1000);
+
+            //setTimeout(function() {
+            //    console.log('Entré al setTimeout 4');
+            //    window.scrollTo({ top: 0, behavior: 'smooth' });
+            //}, 1000);
+
+            //setTimeout(function() {
+            //    console.log('Entré al setTimeout 5');
+            //    document.documentElement.scrollTop = 0;
+            //}, 1000);
+
+            //setTimeout(function() {
+            //    console.log('Entré al setTimeout 6');
+            //    document.body.scrollIntoView(true);
+            //}, 1000);
+        }
     };
 </script>
