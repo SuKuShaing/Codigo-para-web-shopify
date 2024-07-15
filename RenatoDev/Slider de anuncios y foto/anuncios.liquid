@@ -1,0 +1,161 @@
+<div class="section-{{ section.id }} ticker-wrap">
+    <div class="ticker ">
+      {% for block in section.blocks %}
+          <div class="ticker__item">
+           <a class="text_decoration" href="{{ block.settings.url }}"> 
+               {% if block.settings.image != blank %}
+                 <img class="img_tiker" src="{{ block.settings.image | img_url:"1000x" }}"  />
+               {% endif %}
+           <strong>{{ block.settings.text }}</strong> 
+           </a>
+          </div>
+        {% endfor %}
+       {% for block in section.blocks %}
+          <div class="ticker__item">
+           <a class="text_decoration" href="{{ block.settings.url }}"> 
+              {% if block.settings.image != blank %}
+                 <img class="img_tiker" src="{{ block.settings.image | img_url:"1000x" }}"  />
+               {% endif %}
+           <strong>{{ block.settings.text }}</strong> 
+           </a>
+          </div>
+        {% endfor %}
+       {% for block in section.blocks %}
+          <div class="ticker__item">
+           <a class="text_decoration" href="{{ block.settings.url }}"> 
+              {% if block.settings.image != blank %}
+                 <img class="img_tiker" src="{{ block.settings.image | img_url:"1000x" }}"  />
+               {% endif %}
+           <strong>{{ block.settings.text }}</strong> 
+           </a>
+          </div>
+        {% endfor %}
+       {% for block in section.blocks %}
+          <div class="ticker__item">
+           <a class="text_decoration" href="{{ block.settings.url }}"> 
+              {% if block.settings.image != blank %}
+                 <img class="img_tiker" src="{{ block.settings.image | img_url:"1000x" }}"  />
+               {% endif %}
+           <strong>{{ block.settings.text }}</strong> 
+           </a>
+          </div>
+        {% endfor %}
+    </div>
+  </div>
+
+ <style>
+    .section-{{ section.id }} .text_decoration{
+         color: {{section.settings.announce-ment-txt}};
+    text-decoration: none;
+    }
+    .img_tiker {
+        height: 60px;
+        vertical-align: middle; /* Alinea verticalmente la imagen */
+        margin-right: 10px; /* Espacio entre la imagen y el texto */
+    }
+
+    @keyframes ticker {
+        0% {
+            transform: translate3d(0, 0, 0);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
+
+    .ticker-wrap {
+        bottom: 0;
+        width: 100%;
+        overflow: hidden;
+         
+        text-align: center; /* Centra el contenido horizontalmente */
+    }
+   .section-{{ section.id }}{
+     background-color: {{section.settings.announce-ment-bg}};
+   }
+
+    .ticker {
+        display: inline-block;
+        height: 6rem;
+        line-height: 6rem;
+        white-space: nowrap;
+        padding-right: 100%;
+        box-sizing: content-box;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-name: ticker;
+        animation-duration: 240s;
+    }
+
+    .section-{{ section.id }} .ticker__item {
+        display: inline-block;
+        padding: 0 2rem;
+        font-size: 1.6rem;
+        color: {{section.settings.announce-ment-txt}};
+        text-align: left; /* Alinea el texto a la izquierda */
+        vertical-align: middle; /* Alinea verticalmente el contenido */
+    }
+</style>
+
+<script>
+    const ticker = document.querySelector('.ticker');
+
+    // Detener la animación cuando se pasa el mouse
+    ticker.addEventListener('mouseenter', function() {
+        ticker.style.animationPlayState = 'paused';
+    });
+
+    // Reanudar la animación cuando se retira el mouse
+    ticker.addEventListener('mouseleave', function() {
+        ticker.style.animationPlayState = 'running';
+    });
+</script>
+
+{% schema %}
+  {
+      "name": "Noticias Infinitas",
+      "settings": [
+      {
+        "type": "color",
+        "id": "announce-ment-bg",
+        "label": "Fondo Color",
+        "default": "#000000"
+      },
+      {
+          "type": "color",
+          "id": "announce-ment-txt",
+          "label": "Texto Color",
+          "default": "#fff"
+       }     
+    ],
+    "blocks":[
+      {
+        "name":"Noticia",  
+        "type":"announcement-block",
+        "settings":[
+          {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Agrega la imagen"
+        },        {
+          "type": "text",
+          "id": "text",
+          "label": "Agrega el text"
+        },
+         {
+          "type": "url",
+          "id": "Enlace",
+          "label": "Agrega el Enlace"
+        }
+        ]
+      }
+    ],
+    "presets": [
+    {
+      "name": "Noticias Infinitas" 
+    }
+  ]
+  }
+{% endschema %}
