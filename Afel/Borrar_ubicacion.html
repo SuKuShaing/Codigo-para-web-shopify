@@ -1,0 +1,38 @@
+<script>
+
+// *****************************************************************************************
+// ***************************** Eliminar la ubicación del SKU *****************************
+// *****************************************************************************************
+
+// necesito capturar el texto contendi en el campo de texto con la clase "product__sku" y guardarlo en una variable
+let sku_con_ubicacion = document.querySelector('.product__sku').textContent;
+
+// Usa una expresión regular para encontrar cuatro números seguidos
+let match = sku_con_ubicacion.match(/\d{4}/);
+
+// Si se encuentra una coincidencia, extrae los números y los guarda
+let new_sku = match ? match[0] : '';
+
+// Concatena "SKU: " con los números encontrados
+let new_text_sku = "SKU: " + new_sku;
+
+// Reemplaza el texto en el elemento <p class="product__sku">
+document.querySelector('.product__sku').textContent = new_text_sku;
+
+// Esto imprimirá "1234" (sí hay una coincidencia)
+console.log(new_text_sku);
+
+
+
+// *****************************************************************************************
+// ************ Eliminar la clase "subtitle" del elemento p qeu contiene el SKU ************
+// *****************************************************************************************
+
+// obtenemos el p <p class="product__sku subtitle">
+let productSkuElement = document.querySelector('.product__sku');
+
+// Elimina la clase "subtitle" del elemento <p class="product__sku">
+productSkuElement.classList.remove('subtitle');
+
+
+</script>
