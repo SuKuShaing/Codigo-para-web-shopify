@@ -1,85 +1,78 @@
 {%- style -%}
- 
-    .breadcrumbs{
-      display: block;
-    }
- 
- 
 
-       :root  {
-         --svg_fill: {{ section.settings.breadcrumb_text_color}}
-         ;
-       }
-
-       .home-icon-container {
-         display: inline-block;
-         margin-right: 4px;
-         vertical-align: sub;
-       }
-
-       .breadcrumbs {
-         padding: 1rem 5rem;
-         color: {{ section.settings.breadcrumb_text_color }}
-         ;
-         background-color: {{ section.settings.breadcrumb_bg_color }}
-       }
-
-       .breadcrumbs li {
-         display: inline-block;
-       }
-
-       .breadcrumbs a {
-         text-decoration: none;
-         /*Will put liquid customization here*/
-         font-size: 15px;
-         color: inherit;
-       }
+  .breadcrumbs {
+    display: block;
+  }
 
 
-     
-        
-       
+  :root {
+    --svg_fill: {{ section.settings.breadcrumb_text_color }};
+  }
+
+  .home-icon-container {
+    display: none;
+    /* display: inline-block; descomentar para que se vea la casita */
+    margin-right: 4px;
+    vertical-align: sub;
+  }
+
+  .breadcrumbs {
+    padding: 1rem 5rem;
+    color: {{ section.settings.breadcrumb_text_color }};
+    background-color: {{ section.settings.breadcrumb_bg_color }}
+  }
+
+  .breadcrumbs li {
+    display: inline-block;
+  }
+
+  .breadcrumbs a {
+    text-decoration: none;
+    /*Will put liquid customization here*/
+    font-size: 15px;
+    color: inherit;
+  }
 
 
-       .breadcrumb-delimeter:not(:last-child):after {
- content: "›";
-           font-size: 18px;
-         display: inline-block;
-         margin-left: 0.75rem;
-         margin-right: 0.50rem;
-         speak: none;
-       }
+  .breadcrumb-delimeter:not(:last-child):after {
+    content: "›";
+    font-size: 18px;
+    display: inline-block;
+    margin-left: 0.75rem;
+    margin-right: 0.50rem;
+    speak: none;
+  }
 
-       .breadcrumbs [aria-current="page"] {
-         color: inherit;
-         font-weight: normal;
-         text-decoration: none;
-       }
+  .breadcrumbs [aria-current="page"] {
+    color: inherit;
+    font-weight: normal;
+    text-decoration: none;
+  }
 {%- endstyle -%}
 
 <div class="page-width breadcrumbs" aria-label="breadcrumbs">
   {%- unless template == 'index' or template == 'cart' -%}
-    
-      <div class="home-icon-container">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          class="bi bi-house-door-fill"
-          viewBox="0 0 16 16"
-        >
-          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z" />
-        </svg>
-      </div>
- 
+
+    <div class="home-icon-container">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="currentColor"
+        class="bi bi-house-door-fill"
+        viewBox="0 0 16 16">
+        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z" />
+      </svg>
+    </div>
+
 
     <a href="/" title="Inicio">Inicio</a>
     {%- case template.name -%}
       {%- when 'article' -%}
         {%- for link in linklists['main-menu'].links -%}
           {%- if link.url == blog.url -%}
-            <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+            <span class="breadcrumb-delimeter" aria-hidden="true">
+          </span>
             <!-- Breadcrumb Delimeter -->
             {{ link.title | link_to: link.url }}
             {% break %}
@@ -150,7 +143,7 @@
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
-        {%- endfor -%}
+      {%- endfor -%}
 
         {%- comment -%} CONVERT TO ARRAYS {%- endcomment -%}
         {%- assign str_size = link_levels | size | minus: 1 -%}
@@ -252,7 +245,8 @@
         {%- endif -%}
 
         {%- if bc1 -%}
-          <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+          <span class="breadcrumb-delimeter" aria-hidden="true">
+        </span>
           <!-- Breadcrumb Delimeter -->
           {{ bc1 }}
         {%- endif -%}
@@ -304,25 +298,25 @@
 </script>
 
 {% schema %}
-{
-  "name": "Navegacion",
-  "settings": [
-    {
-      "type": "color",
-      "id": "breadcrumb_bg_color",
+  {
+    "name": "Navegacion",
+    "settings": [
+      {
+        "type": "color",
+        "id": "breadcrumb_bg_color",
         "label": "Color Fondo",
-      "default": "#fff"
-    }, {
-      "type": "color",
-      "id": "breadcrumb_text_color",
-      "label": "Color Letra",
-      "default": "#465076"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Navegacion"
-    }
-  ]
-}
+        "default": "#fff"
+      }, {
+        "type": "color",
+        "id": "breadcrumb_text_color",
+        "label": "Color Letra",
+        "default": "#465076"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Navegacion"
+      }
+    ]
+  }
 {% endschema %}

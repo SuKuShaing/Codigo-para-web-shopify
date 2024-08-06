@@ -1,395 +1,242 @@
-// Agregar el siguiente codigo en el archivo main-collection-banner
+{% comment %}
+/////////////////////////////////////////// pegar esto en tu nueva seccion //////////////////////////////////////////////////////////////////////////
 
-{% include "list_colection_apolo" %}
-
-   {
-      "type": "textarea",
-      "id": "collection_handle",
-      "default": "test",
-      "label": "Collection Handle" 
-    },
-
-// crear un snippets con el siguiente codigo
+Del video https://www.youtube.com/watch?v=Zi77ENgHyT0 
+{% endcomment %}
 
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<div class="container">
-  <h2>Collections</h2>
-   <section class="customer-logos slider">
-     {% assign collections_array = section.settings.collection_handle | split: ","  %}
-     {% for  collection_item in collections_array %}
-         {%- if collections[collection_item].image -%}
-              {%- assign collection_image = collections[collection_item].image -%}
-                  {%- elsif collections[collection_item].products.first and collections[collection_item].products.first.images != empty -%}
-                    {%- assign collection_image = collections[collection_item].products.first.featured_image -%}
-                  {%- else -%}
-              {%- assign collection_image = blank -%}
-          {%- endif -%}
-     <a href="{{ collections[collection_item].url  }}"><div class="slide"><img src="{{ collection_image | img_url: '480x' }}"></div><h5 class="text_title">{{ collections[collection_item].title  }}</h5></a>
-    {% endfor %}
-   </section>
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+<style>
+    .apolo_slide:hover{opacity:.7}
+  .desktop{display:block}
+  .movil{display:none}
+
+  @media only screen and (max-width: 700px) and (min-width: 1px) {
+  .desktop{display:none}
+  .movil{display:block}
+  .button_collection_apolo{
+      padding: 2% !important;
+    }
+  .banner__heading {
+      font-size: 3vh !important;
+    }
+  .banner__heading {
+      font-size: 3vh !important;
+    }
+  }
+
+  .apolo:hover{opacity:.7;}
+  .card__inner {
+    filter: brightness(95%);
+  }
+
+  .button_collection_apolo{
+      background: white;
+      flex: 0 0 auto;
+      cursor: pointer;
+      margin-right: 15px;
+      font-weight: 600;
+      color: black;
+      border-radius: 5px;
+      padding: 10px 20px;
+   text-transform:uppercase;    margin: 6px;
+      font-size: 0.7em;border: 1px solid black;display: inline-table;
+  }
+
+  .button_collection_apolo.active{
+      background: #e7da0a;
+      color: black;
+  }
+
+  .multicolumn-card__info p{font-size:0.7em}
+
+  .slide img{box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.1);
+      border: 1.5px solid #F6F6F6;
+      filter: drop-shadow(0 0 5px #eee);}
+
+   @media only screen and (max-width: 700px) and (min-width: 1px) {
+     .slick-slide img {
+      width: 100px !important;
+      height: 100px !important;
+     }
+  }
+     .swiper-button-prev,.swiper-button-next{display:block !important}
+    .apolo_card:hover{
+      transform: scale(1.01);}
+    .text_title{text-align:center;}
+      slide {
+        margin: 0px 10px;
+    }
+  .apolo_card{
+    margin-bottom:15px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .slide img {
+      width: 160px;
+      height: 160px;
+      margin: 0px auto;
+      object-fit: cover;
+  }
+
+  .slide{text-align:center;}
+
+   .swiper-horizontal>.swiper-scrollbar, .swiper-scrollbar.swiper-scrollbar-horizontal {
+
+      bottom: var(--swiper-scrollbar-bottom, 0px) !important;
+      height: var(--swiper-scrollbar-size, 8px) !important;
+
+  }
+    .swiper-button-next:after, .swiper-button-prev:after {
+      font-size: 14px !important;
+      padding: 10px 12px !important;
+      color: white !important;
+      background: black !important;
+      font-weight: 700 !important;
+  }
+    .swiper-button-next{
+      right: 5px !important;
+
+  }
+    .swiper-button-prev{
+      left:  3px !important;
+
+  }
+  .swiper-scrollbar-drag{display:block !important}
+  .swiper-horizontal{overflow: hidden;}
+  .categories{margin-bottom:20px;}
+    .container{width:85%;margin:0px auto}
+</style>
+<div class="container section-{{ section.id }}-padding">
+  <div class="swiper mySwiper mySwiper-{{ section.id }}">
+    <div class="customer-logos slider swiper-wrapper">
+      {%- for block in section.blocks -%}
+        {% assign collection_item = block.settings.collection %}
+
+        {%- if collection_item.image -%}
+          {%- assign collection_image = collection_item.image -%}
+        {%- elsif collection_item.products.first and collection_item.products.first.images != empty -%}
+          {%- assign collection_image = collection_item.products.first.featured_image -%}
+        {%- else -%}
+          {%- assign collection_image = blank -%}
+        {%- endif -%}
+        <a class="apolo_card swiper-slide" href="{{ collection_item.url  }}">
+          <div class="slide"><img class="image_slide" src="{{ collection_image | img_url: '480x' }}"></div>
+          <h5 class="text_title ">{{ collection_item.title }}</h5>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+   
+  </div>
 </div>
 
-<style>
-  .text_title{text-align:center;}
-  @charset 'UTF-8';
-/* Slider */
-.slick-loading .slick-list
-{
-    background: #fff url('./ajax-loader.gif') center center no-repeat;
-}
-
-/* Icons */
-@font-face
-{
-    font-family: 'slick';
-    font-weight: normal;
-    font-style: normal;
-
-    src: url('./fonts/slick.eot');
-    src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
-}
-/* Arrows */
-.slick-prev,
-.slick-next
-{
-    font-size: 0;
-    line-height: 0;
-
-    position: absolute;
-    top: 50%;
-
-    display: block;
-
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    transform: translate(0, -50%);
-
-    cursor: pointer;
-
-    color: transparent;
-    border: none;
-    outline: none;
-    background: transparent;
-}
-.slick-prev:hover,
-.slick-prev:focus,
-.slick-next:hover,
-.slick-next:focus
-{
-    color: transparent;
-    outline: none;
-    background: transparent;
-}
-.slick-prev:hover:before,
-.slick-prev:focus:before,
-.slick-next:hover:before,
-.slick-next:focus:before
-{
-    opacity: 1;
-}
-.slick-prev.slick-disabled:before,
-.slick-next.slick-disabled:before
-{
-    opacity: .25;
-}
-
-.slick-prev:before,
-.slick-next:before
-{
-    font-family: 'slick';
-    font-size: 30px;
-    line-height: 1;
-
-    opacity: .75;
-    color: black;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.slick-prev
-{
-    left: -15px;
-}
-[dir='rtl'] .slick-prev
-{
-    right: -25px;
-    left: auto;
-}
-.slick-prev:before
-{
-    content: '←';
-}
-[dir='rtl'] .slick-prev:before
-{
-    content: '→';
-}
-
-.slick-next
-{
-    right: -15px;
-}
-[dir='rtl'] .slick-next
-{
-    right: auto;
-    left: -25px;
-}
-.slick-next:before
-{
-    content: '→';
-}
-[dir='rtl'] .slick-next:before
-{
-    content: '←';
-}
-
-/* Dots */
-.slick-dotted.slick-slider
-{
-    margin-bottom: 30px;
-}
-
-.slick-dots
-{
-    position: absolute;
-    bottom: -25px;
-
-    display: block;
-
-    width: 100%;
-    padding: 0;
-    margin: 0;
-
-    list-style: none;
-
-    text-align: center;
-}
-.slick-dots li
-{
-    position: relative;
-
-    display: inline-block;
-
-    width: 20px;
-    height: 20px;
-    margin: 0 5px;
-    padding: 0;
-
-    cursor: pointer;
-}
-.slick-dots li button
-{
-    font-size: 0;
-    line-height: 0;
-
-    display: block;
-
-    width: 20px;
-    height: 20px;
-    padding: 5px;
-
-    cursor: pointer;
-
-    color: transparent;
-    border: 0;
-    outline: none;
-    background: transparent;
-}
-.slick-dots li button:hover,
-.slick-dots li button:focus
-{
-    outline: none;
-}
-.slick-dots li button:hover:before,
-.slick-dots li button:focus:before
-{
-    opacity: 1;
-}
-.slick-dots li button:before
-{
-    font-family: 'slick';
-    font-size: 6px;
-    line-height: 20px;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 20px;
-    height: 20px;
-
-    content: '•';
-    text-align: center;
-
-    opacity: .25;
-    color: black;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.slick-dots li.slick-active button:before
-{
-    opacity: .75;
-    color: black;
-}
-h2{
-  text-align:center;
-  padding: 20px;
-}
-/* Slider */
-
-.slick-slide {
-    margin: 0px 20px;
-}
-
-.slick-slide img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 50px;
-    margin: 0px auto;
-}
-
-.slick-slider
-{
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-            user-select: none;
-    -webkit-touch-callout: none;
-    -khtml-user-select: none;
-    -ms-touch-action: pan-y;
-        touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.slick-list
-{
-    position: relative;
-    display: block;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-}
-.slick-list:focus
-{
-    outline: none;
-}
-.slick-list.dragging
-{
-    cursor: pointer;
-    cursor: hand;
-}
-
-.slick-slider .slick-track,
-.slick-slider .slick-list
-{
-    -webkit-transform: translate3d(0, 0, 0);
-       -moz-transform: translate3d(0, 0, 0);
-        -ms-transform: translate3d(0, 0, 0);
-         -o-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-}
-
-.slick-track
-{
-    position: relative;
-    top: 0;
-    left: 0;
-    display: block;
-}
-.slick-track:before,
-.slick-track:after
-{
-    display: table;
-    content: '';
-}
-.slick-track:after
-{
-    clear: both;
-}
-.slick-loading .slick-track
-{
-    visibility: hidden;
-}
-
-.slick-slide
-{
-    display: none;
-    float: left;
-    height: 100%;
-    min-height: 1px;
-}
-[dir='rtl'] .slick-slide
-{
-    float: right;
-}
-.slick-slide img
-{
-    display: block;
-}
-.slick-slide.slick-loading img
-{
-    display: none;
-}
-.slick-slide.dragging img
-{
-    pointer-events: none;
-}
-.slick-initialized .slick-slide
-{
-    display: block;
-}
-.slick-loading .slick-slide
-{
-    visibility: hidden;
-}
-.slick-vertical .slick-slide
-{
-    display: block;
-    height: auto;
-    border: 1px solid transparent;
-}
-.slick-arrow.slick-hidden {
-    display: none;
-}
-
- .pagination {
-    display: block !important;
-}
-  
-</style>
 <script>
-  $(document).ready(function(){
-    $('.customer-logos').slick({
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 1500,
-        arrows: true,
-        dots: false,
-        pauseOnHover: false,
-        responsive: [{
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 4
-            }
-        }, {
-            breakpoint: 520,
-            settings: {
-                slidesToShow: 3
-            }
-        }]
-    });
-});
+  var swiper = new Swiper(".mySwiper-{{ section.id }}", {
+            grabCursor: true,
+            speed: 400,
+            loop: true,
+            mousewheel: {
+              invert: true,
+            },
+           spaceBetween: 10,
+           breakpoints: {
+            1400: {
+              slidesPerView: {{section.settings.desktop}} },
+
+            1024: {
+              slidesPerView: {{section.settings.laptop}} },
+
+            650: {
+              slidesPerView: {{section.settings.movil}} } },
+          navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+          },
+      });
 </script>
+
+{% schema %}
+{
+  "name": "Coleccion Dinamica",
+  "tag": "section",
+  "max_blocks": 15,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+     {
+      "type": "number",
+      "id": "desktop",
+      "label": "Imagen Escritorio",
+       "default": 5
+    },   
+    {
+      "type": "number",
+      "id": "laptop",
+      "label": "Imagen Laptop",
+       "default":3
+    }, 
+    {
+      "type": "number",
+      "id": "movil",
+      "label": "Imagen Movil",
+       "default": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_collection",
+      "name": "Coleccion",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Coleccion"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Coleccion Dinamica"
+    }
+  ]
+}
+{% endschema %}
