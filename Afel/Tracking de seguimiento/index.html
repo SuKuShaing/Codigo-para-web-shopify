@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<style>
+			input[type="text"],
+			select {
+				width: 50%;
+				padding: 12px 20px;
+				margin: 8px 0;
+				display: inline-block;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				box-sizing: border-box;
+				text-align: center;
+			}
+		</style>
+		<h1 style="text-wrap:balance; text-align: center">
+			<strong class="h1">Ingresa tu número de pedido o número de seguimiento<br /></strong>
+		</h1>
+		<p style="text-align: center">
+			<input
+				class="field__input"
+				style="
+                    border-color: #8e8e8e;
+                    border-radius: var(--inputs-radius)
+                    "
+				type="text"
+				id="myText"
+				value=""
+			/>
+		</p>
+		<div style="text-align: center">
+			<div style="text-align: center">
+				<span style="font-size: 100%">
+					<input
+						class="button"
+						style="cursor: pointer; background: #008891"
+						type="button"
+						value="Consultar"
+						onclick="myFunction()"
+				/></span>
+			</div>
+		</div>
+
+		<script>
+			function myFunction() {
+				var x =
+					"https://api.enviame.io/s2/companies/139504/deliveries/" +
+					document.getElementById("myText").value +
+					"/tracking";
+				window.location.href = x;
+			}
+		</script>
+	</body>
+</html>
