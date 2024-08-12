@@ -19,16 +19,15 @@
 				text-align: center;
 			}
 		</style>
-		<h1 style="text-wrap:balance; text-align: center">
-			<strong class="h1">Ingresa tu número de pedido o número de seguimiento<br /></strong>
+		<h1 style="text-wrap: balance; text-align: center">
+			<strong class="h1"
+				>Ingresa tu número de pedido o número de seguimiento<br
+			/></strong>
 		</h1>
 		<p style="text-align: center">
 			<input
 				class="field__input"
-				style="
-                    border-color: #8e8e8e;
-                    border-radius: var(--inputs-radius)
-                    "
+				style="border-color: #8e8e8e; border-radius: var(--inputs-radius)"
 				type="text"
 				id="myText"
 				value=""
@@ -50,11 +49,24 @@
 		<script>
 			function myFunction() {
 				var x =
-					"https://api.enviame.io/s2/companies/139504/deliveries/" +
+					"https://api.enviame.io/s2/companies/182537/deliveries/" +
 					document.getElementById("myText").value +
 					"/tracking";
-				window.location.href = x;
+				window.location.href = x; // Redirige el navegador a la URL especificada
 			}
 		</script>
 	</body>
 </html>
+<!-- 
+Con este iframe se puede visualizar el tracking de un pedido en específico en la web misma
+
+En un futuro tal vez incluir en la misma web, aunque tal vez no sea recomendable por la firma en el pie de página 
+y por que al hacer click en el mail de seguimiento que le llega al cliente, lo redirige a la web de seguimiento de envíame,
+por ende el usuario vería dos webs diferentes, una en Afel con el iframe y otra fuera de enviame, lo cual puede ser confuso.
+
+<iframe 
+	src="https://api.enviame.io/s2/companies/182537/deliveries/P.Afel:-22133/tracking" 
+	title="W3Schools Free Online Web Tutorials"
+	style="width: auto; height: 600px">
+</iframe> 
+-->
