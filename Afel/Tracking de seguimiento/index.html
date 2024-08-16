@@ -48,11 +48,10 @@
 
 		<script>
 			function myFunction() {
-				var x =
-					"https://api.enviame.io/s2/companies/182537/deliveries/" +
-					document.getElementById("myText").value +
-					"/tracking";
-				window.location.href = x; // Redirige el navegador a la URL especificada
+				var x = "https://api.enviame.io/s2/companies/182537/deliveries/" +
+					document.getElementById("myText").value + "/tracking";
+				window.open(x, '_blank'); // Abre la URL en una nueva pestaña
+				// window.location.href = x; // Redirige el navegador a la URL especificada en la misma pestaña
 			}
 		</script>
 	</body>
