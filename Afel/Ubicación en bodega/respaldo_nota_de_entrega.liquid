@@ -1,0 +1,46 @@
+{% comment %} Este es el respaldo del original que viene en la aplicación {% endcomment %}
+
+
+<div>
+  <div class="columns">
+    <h1>Packing Slip</h1>
+    <div class="address">
+      <p style="text-align: right; margin: 0;">
+      Order {{ order.order_name }}<br />
+      {% if order.po_number %}PO # {{ order.po_number }}<br />{% endif %}
+      {{ order.created_at | date: "%B %e, %Y" }}
+      </p>
+    </div>
+  </div>
+  <div class="columns" style="margin-top: 1.5em;">
+    <div class="address">
+      <strong>From</strong><br/>
+      {{ shop.name }}<br/>
+      {{ shop.address | format_address }}
+    </div>
+    {% if order.shipping_address %}
+    <div class="address">
+      <strong>Ship to</strong>
+      {{ order.shipping_address | format_address  }}
+     </div>
+    {% endif %}
+  </div>
+  <hr />
+  <h2>Order Details</h2>
+  <table class="table-tabular" style="margin: 1em 0 0 0;">
+    <thead>
+      <tr>
+        <th style="width: 10%; text-align: left;">Qty</th>
+        <th style="width: 45%; text-align: left;">Item</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line_item in order.line_items %}
+      <tr>
+        <td style="text-align: left;">{{ line_item.quantity }}</td>
+        <td style="text-align: left;">{{ line_item.title }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

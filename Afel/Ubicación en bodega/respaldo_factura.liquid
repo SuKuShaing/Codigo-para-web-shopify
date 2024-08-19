@@ -1,0 +1,144 @@
+{% comment %} Este es el respaldo del original que viene en la aplicación {% endcomment %}
+
+<div>
+<div class="columns">
+   <h1>Invoice</h1>
+   <div>
+      <p style="text-align: right; margin: 0;">
+         Order {{ order.order_name }}<br />
+         {% if order.po_number %}PO # {{ order.po_number }}<br />{% endif %}
+         {{ order.created_at | date: "%B %e, %Y" }}
+      </p>
+   </div>
+</div>
+<div class="columns" style="margin-top: 1.5em;">
+   <div class="address">
+      <strong>From</strong><br/>
+      {{ shop.name }}<br/>
+      {{ shop.address | format_address }}
+      {% if shop.phone %}{{ shop.phone }}{% endif %}
+   </div>
+   {% if order.billing_address %}
+   <div class="address">
+      <strong>Bill to</strong>
+      {{ order.billing_address | format_address  }}
+   </div>
+   {% endif %}
+   {% if order.shipping_address %}
+   <div class="address">
+      <strong>Ship to</strong>
+      {{ order.shipping_address | format_address  }}
+      {% if order.shipping_address.phone %}{{ order.shipping_address.phone }}{% endif %}
+   </div>
+   {% endif %}
+</div>
+<hr />
+<h2>Order Details</h2>
+<table class="table-tabular" style="margin: 1em 0 0 0;">
+   <thead>
+      <tr>
+         <th>Qty</th>
+         <th>Item</th>
+         <th style="text-align: right;">Price</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for line_item in order.line_items %}
+      <tr>
+         <td>{{ line_item.quantity }}</td>
+         <td>{{ line_item.title }}
+            {% if line_item.line_level_discount_allocations.size > 0 %}
+            <span class="subduedText">
+            {% for discount_allocation in line_item.line_level_discount_allocations %}
+            <br>{{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})
+            {% endfor %}
+            </span>
+            {% endif %}
+         </td>
+         <td style="text-align: right;">
+            {% if line_item.original_price != line_item.final_price %}
+            <span class="subduedText"><s>{{ line_item.original_price | money }}</s></span>
+            {% endif %}
+            {{ line_item.final_price | money }}
+         </td>
+      </tr>
+      {% endfor %}
+      <tr>
+         <td colspan="2" style="text-align: right;">Subtotal</td>
+         <td style="text-align: right;">{{ order.line_items_subtotal_price | money }}</td>
+      </tr>
+      {% assign has_shipping_discount = false %}
+      {% for discount_application in order.discount_applications %}
+      {% if discount_application.target_type == 'shipping_line' %}
+      {% assign has_shipping_discount = true %}
+      {% endif %}
+      {% if discount_application.target_selection == 'all' and discount_application.target_type != 'shipping_line' %}
+      <tr>
+         <td colspan="2" style="text-align: right;">{% if discount_application.title %}<span class="subduedText">{{ discount_application.title }}</span>{% endif %}</td>
+         <td style="text-align: right;">-{{ discount_application.total_allocated_amount | money }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+      <tr>
+         <td colspan="2" style="text-align: right;">Tax</td>
+         <td style="text-align: right;">{{ order.tax_price | money }}</td>
+      </tr>
+      {% if order.shipping_address %}
+      <tr>
+         <td colspan="2" style="text-align: right;">Shipping</td>
+         <td style="text-align: right;">{% if has_shipping_discount %}FREE{% else %}{{ order.shipping_price | money }}{% endif %}</td>
+      </tr>
+      {% endif %}
+      <tr>
+         <td colspan="2" style="text-align: right;"><strong>Total</strong></td>
+         <td style="text-align: right;"><strong>{{ order.total_price | money }}</strong></td>
+      </tr>
+      {% if order.net_payment != order.total_net_amount %}
+      <tr>
+         <td colspan="2" style="text-align: right;">Total Paid</td>
+         <td style="text-align: right;">{{ order.net_payment | money }}</td>
+      </tr>
+      {% endif %}
+      {% if order.total_refunded_amount > 0 %}
+      <tr>
+         <td colspan="2" style="text-align: right;">Total Refunded</td>
+         <td style="text-align: right;">-{{ order.total_refunded_amount | money }}</td>
+      </tr>
+      {% endif %}
+      {% if order.net_payment != order.total_net_amount %}
+      <tr>
+         <td colspan="2" style="text-align: right;"><strong>Outstanding Amount</strong></td>
+         <td style="text-align: right;"><strong>{{ order.total_price | minus: order.net_payment | money }}</strong></td>
+      </tr>
+      {% endif %}
+   </tbody>
+</table>
+{% if transactions.size > 1 %}
+<h2>Transaction Details</h2>
+<table class="table-tabular" style="margin: 0 0 1.5em 0;">
+   <thead>
+      <tr>
+         <th>Type</th>
+         <th>Amount</th>
+         <th>Kind</th>
+         <th>Status</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for transaction in transactions %}
+      <tr>
+         <td>{{ transaction.gateway | payment_method }}</td>
+         <td>{{ transaction.amount | money }}</td>
+         <td>{{ transaction.kind }}</td>
+         <td>{{ transaction.status }}</td>
+      </tr>
+      {% endfor %}
+   </tbody>
+</table>
+{% endif %}
+{% if order.note %}
+<h2>Note</h2>
+<p>{{ order.note }}</p>
+{% endif %}
+<p style="margin-bottom: 0;">If you have any questions, please send an email to <u>{{ shop.email }}</u></p>
+</div>
