@@ -1,0 +1,73 @@
+<!-- 
+un input donde el usuario ingresa su region y se le muestra el valor y tiempo de envío de su pedido.
+-->
+<p><strong>Selecciona tu región</strong> para saber el valor de envío</p>
+<select class="search__input field__input" id="lista-regiones">
+    <option value="Arica y Parinacota">Arica y Parinacota</option>
+    <option value="Tarapacá">Tarapacá</option>
+    <option value="Antofagasta">Antofagasta</option>
+    <option value="Atacama">Atacama</option>
+    <option value="Coquimbo">Coquimbo</option>
+    <option value="Valparaíso">Valparaíso</option>
+    <option value="Metropolitana" selected>Metropolitana</option>
+    <option value="O'higgins">O'higgins</option>
+    <option value="Maule">Maule</option>
+    <option value="Ñuble">Ñuble</option>
+    <option value="Biobío">Biobío</option>
+    <option value="La Araucanía">La Araucanía</option>
+    <option value="Los Ríos">Los Ríos</option>
+    <option value="Los Lagos">Los Lagos</option>
+    <option value="Aysén">Aysén</option>
+    <option value="Magallanes">Magallanes</option>
+</select>
+
+<p>El valor de envío a la Región <span style="display: none;" id="de">de </span><strong id="nombre-region">Metropolitana</strong> es de <strong>$</strong><strong id="valor-envio">5.439</strong></p>
+
+<p>Nos demoramos de 3 a 5 días hábiles</p>
+
+<p>Y recuerda que por más de <strong>$60.000</strong>  el envío es <strong>gratis</strong></p>
+
+<style>
+    #lista-regiones {
+        padding: 10px;
+        border: 1px solid rgb(18, 18, 18);
+    }
+</style>
+
+<script>
+    const regiones = {
+        "Arica y Parinacota": 14985,
+        "Tarapacá": 14985,
+        "Antofagasta": 13320,
+        "Atacama": 14985,
+        "Coquimbo": 8880,
+        "Valparaíso": 7770,
+        "Metropolitana": 5439,
+        "O'higgins": 7770,
+        "Maule": 8880,
+        "Ñuble": 8325,
+        "Biobío": 8880,
+        "La Araucanía": 9102,
+        "Los Ríos": 9990,
+        "Los Lagos": 9990,
+        "Aysén": 16095,
+        "Magallanes": 16095,
+    }
+
+    const listaRegiones = document.getElementById('lista-regiones');
+    const valorEnvio = document.getElementById('valor-envio');
+    const nombreRegion = document.getElementById('nombre-region');
+
+    listaRegiones.addEventListener('change', () => {
+        const region = listaRegiones.value;
+        valorEnvio.textContent = regiones[region].toLocaleString('es-CL');
+        nombreRegion.textContent = region;
+
+        // Ocultar el span id="de" si la región es Metropolitana
+        if (region === 'Metropolitana') {
+            document.getElementById('de').style.display = 'none';
+        } else {
+            document.getElementById('de').style.display = 'inline';
+        }
+    });
+</script>
