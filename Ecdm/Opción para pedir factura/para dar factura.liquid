@@ -1,0 +1,41 @@
+{% comment %} 
+Esto hay que añadirlo en cart-drawer.liquid
+antes de la etiqueta </details> y ahí quedará en las notas del pedido
+
+{% endcomment %}
+
+<!-- Añadido para poder dar factura -->
+<!-- info aquí https://ayuda.relbase.cl/shopify-c -->
+<script>
+    $(function() {
+        $('select[id=billing_documento]').on('change', function() {
+            var isVisible = $(this).val() != 39;
+            $('#gallery-box').toggle(isVisible);
+        }).trigger('change');
+    });
+</script>
+
+<p class="cart-attribute__field" style="padding-top: 30px;">
+    <label for="documento">Tipo de documento</label>
+    <select required="required" class="required" id="billing_documento" name="attributes[billing_documento]">
+        <option value="39">Boleta</option>
+        <option value="33">Factura</option>
+    </select>
+</p>
+
+<p class="cart-attribute__field">
+    <label for="rut">Rut</label>
+    <input  id="rut" type="text" placeholder="76000000-0" name="attributes[billing_rut]" value="">
+</p>
+
+<div id="gallery-box">
+    <p class="cart-attribute__field">
+        <label for="razon-social">Razon Social</label>
+        <input  id="razon-social" type="text" placeholder="Game Center SPA" name="attributes[billing_rzn_social]" value="">
+    </p>
+    <p class="cart-attribute__field" style="margin-bottom: 0;">
+        <label for="giro">Giro</label>
+        <input  id="giro" type="text" placeholder="Ej: Ferretería" name="attributes[billing_giro]" value="">
+    </p>
+</div>
+<!-- Hasta aquí llega lo agregado para poder dar factura -->
