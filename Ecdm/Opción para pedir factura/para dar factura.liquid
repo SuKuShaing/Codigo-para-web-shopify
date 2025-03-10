@@ -7,11 +7,32 @@ antes de la etiqueta </details> y ahí quedará en las notas del pedido
 <!-- Añadido para poder dar factura -->
 <!-- info aquí https://ayuda.relbase.cl/shopify-c -->
 <script>
-    $(function() {
-        $('select[id=billing_documento]').on('change', function() {
-            var isVisible = $(this).val() != 39;
-            $('#gallery-box').toggle(isVisible);
-        }).trigger('change');
+    // $(function() {
+    //     $('select[id=billing_documento]').on('change', function() {
+    //         var isVisible = $(this).val() != 39;
+    //         $('#gallery-box').toggle(isVisible);
+    //     }).trigger('change');
+    // });
+
+    // Espera a que el DOM se cargue
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectDoc = document.getElementById('billing_documento');
+        const galleryBox = document.getElementById('gallery-box');
+
+        function toggleGallery() {
+            // Como el valor viene como string, comparamos con "39"
+            if (selectDoc.value !== "39") {
+                galleryBox.style.display = 'block';
+            } else {
+                galleryBox.style.display = 'none';
+            }
+        }
+
+        // Añade el evento change al select
+        selectDoc.addEventListener('change', toggleGallery);
+
+        // Ejecuta la función para que se aplique al cargar
+        toggleGallery();
     });
 </script>
 
