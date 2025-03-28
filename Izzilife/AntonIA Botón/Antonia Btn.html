@@ -1,0 +1,122 @@
+<div id="contenedor-btn-antonia">
+	<a id="link-anto" href="https://izzilife.cl/pages/antonia">
+		<div id="Sparks">
+			<svg
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<!-- Sparkle grande -->
+				<path
+					class="sparkle"
+					d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2z"
+				/>
+
+				<!-- Sparkle mediana -->
+				<path
+					class="sparkle"
+					d="M16 6a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2z"
+				/>
+
+				<!-- Sparkle pequeña -->
+				<path
+					class="sparkle"
+					d="M9 18a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"
+				/>
+			</svg>
+		</div>
+		<p id="texto-btn-antonia">Evaluación Nutricional Gratis</p>
+	</a>
+</div>
+
+<style>
+    #contenedor-btn-antonia {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+	#link-anto {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		text-decoration: none;
+		/* padding: 10px 20px; */
+		/* border-radius: 5px; */
+		/* box-shadow: 0px 4px 17px rgba(40, 40, 11, 0.1), 0px 15px 66px rgba(40, 40, 11, 0.19); */
+		/* transition: background-color 0.3s ease; */
+	}
+
+	#texto-btn-antonia {
+		font-size: 18px;
+		font-weight: semibold;
+		color: rgb(var(--color-foreground));
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	/* ******* */
+	/* Sparkle */
+	/* ******* */
+	#Sparks {
+		width: 30px;
+		height: 30px;
+		color: rgba(var(--color-button));
+	}
+	.sparkle {
+		transform-origin: center;
+		transform-box: fill-box;
+		animation: twinkle 1.5s infinite alternate ease-in-out;
+	}
+	#link-anto:hover .sparkle:nth-child(3),
+	.sparkle:nth-child(3) {
+		animation-delay: 0s;
+	}
+	#link-anto:hover .sparkle:nth-child(2),
+	.sparkle:nth-child(2) {
+		animation-delay: 0.7s;
+	}
+	#link-anto:hover .sparkle:nth-child(1),
+	.sparkle:nth-child(1) {
+		animation-delay: 1.1s;
+	}
+
+	@keyframes twinkle {
+		0% {
+			transform: scale(1);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(1.4);
+			opacity: 0.5;
+		}
+	}
+
+	/* Al hacer hover sobre el contenedor del botón,
+   se aplica la animación hoverSpin a cada sparkle */
+	#link-anto:hover .sparkle {
+		animation: hoverSpin 3s ease-in-out infinite;
+	}
+
+	/* Nueva animación que incluye giro para el estado hover */
+	@keyframes hoverSpin {
+		0% {
+			transform: scale(1) rotate(0deg);
+			opacity: 1;
+		}
+		50% {
+			transform: scale(1.4) rotate(360deg);
+			opacity: 0.5;
+		}
+		100% {
+			transform: scale(1) rotate(720deg);
+			opacity: 1;
+		}
+	}
+</style>
