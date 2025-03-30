@@ -33,13 +33,13 @@
 </div>
 
 <style>
-    #contenedor-btn-antonia {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-        width: 100%;
-    }
+	#contenedor-btn-antonia {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		width: 100%;
+	}
 
 	#link-anto {
 		display: flex;
@@ -73,6 +73,7 @@
 		transform-origin: center;
 		transform-box: fill-box;
 		animation: twinkle 1.5s infinite alternate ease-in-out;
+		transition: color 1.5s ease;
 	}
 	#link-anto:hover .sparkle:nth-child(3),
 	.sparkle:nth-child(3) {
@@ -91,10 +92,12 @@
 		0% {
 			transform: scale(1);
 			opacity: 1;
+			color: var(--sparkle-previal-color);
 		}
 		100% {
 			transform: scale(1.4);
 			opacity: 0.5;
+			color: var(--sparkle-target-color);
 		}
 	}
 
@@ -109,6 +112,7 @@
 		0% {
 			transform: scale(1) rotate(0deg);
 			opacity: 1;
+			color: var(--sparkle-previal-color);
 		}
 		50% {
 			transform: scale(1.4) rotate(360deg);
@@ -117,6 +121,98 @@
 		100% {
 			transform: scale(1) rotate(720deg);
 			opacity: 1;
+			color: var(--sparkle-target-color);
 		}
 	}
 </style>
+
+<script>
+	// Obtén el valor de la variable CSS (se espera que sea una cadena del tipo "0, 250, 0")
+	const colorButton =
+		getComputedStyle(document.documentElement)
+			.getPropertyValue("--color-button")
+			.trim() || "0, 0, 250";
+
+	// Divide la cadena en sus componentes y conviértelos a un número entre 0 y 1
+	const [initR, initG, initB] = colorButton
+		.split(",")
+		.map((component) => parseFloat(component.trim()) / 256);
+
+	// Inicializa las variables random con esos valores
+	let randomRed = initR;
+	let randomGreen = initG;
+	let randomBlue = initB;
+
+	/* Variables para los colores aleatorios
+	let randomRed = Math.random();
+	let randomGreen = Math.random();
+	let randomBlue = Math.random();
+	*/
+
+	// función para actualizar los colores aleatorios suavemente, sí llega a 1 empieza a bajar hasta 0, sí llega a 0 empieza a subir hasta 1
+	function updateRandomColors(ramdomColor, name) {
+		// sí el ramdomColor es menor a 0.1, lo sube un 10% y sí es mayor a 0.9 lo baja un 10%
+		if (ramdomColor <= 0.1) {
+			ramdomColor += 0.1;
+		} else if (ramdomColor >= 0.9) {
+			ramdomColor -= 0.1;
+		} else {
+			// sí está entre 0.1 y 0.9, lo sube o baja aleatoriamente
+			let randides = Math.random();
+			if ((randides.toFixed(2) * 100) % 10 === 0) {
+				// sí el número aleatorio es divisible por 10, sí es menos de 0.2 lo duplica, sí es mayor a 0.8 lo divide por 2, sí no lo aumenta un 50%
+				if (ramdomColor < 0.2) {
+					ramdomColor = ramdomColor * 2;
+				} else if (ramdomColor > 0.8) {
+					ramdomColor = ramdomColor / 2;
+				} else {
+					ramdomColor = ramdomColor * 1.5;
+				}
+			} else if (randides < 0.5) {
+				ramdomColor -= 0.03;
+			} else {
+				ramdomColor += 0.03;
+			}
+		}
+
+		// Guarda el nuevo valor en la variable correspondiente para tener el valor en la siguiente vez que se envíe
+		if (name === "randomRed") {
+			randomRed = ramdomColor;
+		} else if (name === "randomGreen") {
+			randomGreen = ramdomColor;
+		} else if (name === "randomBlue") {
+			randomBlue = ramdomColor;
+		}
+
+		return ramdomColor;
+	}
+
+	// Función para generar un color aleatorio en formato rgb()
+	function randomColor() {
+		const r = Math.floor(updateRandomColors(randomRed, "randomRed") * 256);
+		const g = Math.floor(updateRandomColors(randomGreen, "randomGreen") * 256);
+		const b = Math.floor(updateRandomColors(randomBlue, "randomBlue") * 256);
+		console.log({ r, g, b });
+		return `rgb(${r}, ${g}, ${b})`;
+	}
+
+	let colorAnterior = "rgba(var(--color-button))";
+
+	// Cada 1500ms actualiza la variable CSS en el root
+	setInterval(() => {
+		let colorActual = randomColor();
+
+		// color previo
+		document.documentElement.style.setProperty(
+			"--sparkle-previal-color",
+			colorAnterior
+		);
+		// color de destino
+		document.documentElement.style.setProperty(
+			"--sparkle-target-color",
+			colorActual
+		);
+		// Actualiza el color anterior para la próxima iteración
+		colorAnterior = colorActual;
+	}, 1500);
+</script>
