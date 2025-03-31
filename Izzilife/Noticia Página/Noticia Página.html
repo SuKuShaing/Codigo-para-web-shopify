@@ -1,0 +1,64 @@
+<div id="Contenedor-AntonIA">
+	<!-- <iframe
+		id="iframe-AntonIA"
+		title="Chat con la nutricionista de inteligencia artificial"
+		src="https://drive.google.com/file/d/19fY_YzeRa7UcXQEPAsmDKvmHzfcw5J5F/preview"
+		allow="autoplay"
+	>
+	</iframe> -->
+    
+	<iframe
+		id="iframe-AntonIA"
+		title="Chat con la nutricionista de inteligencia artificial"
+		src="https://cdn.shopify.com/s/files/1/0615/1392/4713/files/Izzilife_en_la_prensa.pdf"
+		allow="autoplay"
+	>
+	</iframe>
+
+    <!-- <embed src="https://cdn.shopify.com/s/files/1/0615/1392/4713/files/Izzilife_en_la_prensa.pdf" type="application/pdf" width="100%" height="600px"> -->
+    
+    <!-- <object data="https://cdn.shopify.com/s/files/1/0615/1392/4713/files/Izzilife_en_la_prensa.pdf" type="application/pdf" width="100%" height="600px">
+        <p>Tu navegador no puede mostrar el PDF. <a href="https://cdn.shopify.com/s/files/1/0615/1392/4713/files/Izzilife_en_la_prensa.pdf">Descárgalo aquí</a>.</p>
+    </object> -->
+
+</div>
+
+<style>
+	#Contenedor-AntonIA {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#iframe-AntonIA {
+		border: none;
+		border-radius: 8px;
+		box-shadow: 0px 4px 17px rgba(40, 40, 11, 0.1),
+			0px 15px 66px rgba(40, 40, 11, 0.19);
+		width: 70%;
+		height: clamp(600px, 80dvh, 1000px);
+		/* min-height: 600px;
+		height: 70dvh;
+		max-height: 1000px; */
+	}
+
+	@media (max-width: 980px) {
+		#iframe-AntonIA {
+			width: 80%;
+			min-height: 500px;
+		}
+	}
+
+	@media (max-width: 750px) {
+		#iframe-AntonIA {
+			width: 90%;
+		}
+	}
+
+	@media (max-width: 500px) {
+		#iframe-AntonIA {
+			width: 100%;
+		}
+	}
+</style>
